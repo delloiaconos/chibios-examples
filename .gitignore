@@ -1,3 +1,5 @@
+# Build output directory
+build
 # Prerequisites
 *.d
 

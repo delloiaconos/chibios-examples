@@ -17,7 +17,7 @@
 
 /*
  * [SSD1306] SSD1306 OLED Display Example
- * A simple example with the SSD1306 OLED display
+ * A simple example with the SSD1306 OLED display.
  */
 
 #include "ch.h"

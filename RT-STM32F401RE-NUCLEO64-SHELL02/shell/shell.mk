@@ -1,8 +1,11 @@
-# RT Shell files.
-SHELLSRC = $(CHIBIOS)/os/various/shell/shell.c \
-           $(CHIBIOS)/os/various/shell/shell_cmd.c
+# Shell PATH
+SHELLPATH = ./shell
 
-SHELLINC = $(CHIBIOS)/os/various/shell
+# RT Shell files.
+SHELLSRC = $(SHELLPATH)/shell.c \
+           $(SHELLPATH)/shell_cmd.c
+
+SHELLINC = $(SHELLPATH)
 
 # Shared variables
 ALLCSRC += $(SHELLSRC)

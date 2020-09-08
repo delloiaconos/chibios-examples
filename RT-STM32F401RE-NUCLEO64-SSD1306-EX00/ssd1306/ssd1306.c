@@ -2,7 +2,7 @@
 #include "ssd1306.h"
 #include "ssd1306_font.c"
 #include "ssd1306_font_7_10.c"
-//#include "string.h"
+#include "string.h"
 
 #define ABS(x)   ((x) > 0 ? (x) : -(x))
 

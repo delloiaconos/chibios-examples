@@ -8,9 +8,8 @@ The demo runs on an STM32 Nucleo64-F401RE board board.
 
 ** The Demo **
 
-The demo flashes the board LED using a thread, by pressing the button located
-on the board the test procedure is activated with output on the serial port
-SD2 (USART2, mapped on USB virtual COM port).
+The demo writes some text on an oled display based on the ssd1306 driver.
+The display I2C should be connected on PB8 and PB9.
 
 ** Build Procedure **
 

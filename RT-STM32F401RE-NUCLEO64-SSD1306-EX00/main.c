@@ -17,7 +17,9 @@
 
 /*
  * [SSD1306] SSD1306 OLED Display Example
- * A simple example with the SSD1306 OLED display
+ * A simple example with the SSD1306 OLED display. This demo writes some text
+ * on an oled display based on the ssd1306 driver. The display I2C should be
+ * connected on PB8 and PB9.
  */
 
 #include "ch.h"

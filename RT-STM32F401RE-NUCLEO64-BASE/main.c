@@ -1,5 +1,6 @@
 /*
-    ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+    NeaPolis Innovation Summer Campus 2021 Examples 
+    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,26 +15,15 @@
     limitations under the License.
 */
 
-#include "ch.h"
-#include "hal.h"
-#include "rt_test_root.h"
-#include "oslib_test_root.h"
 
 /*
- * Green LED blinker thread, times are in milliseconds.
+ * Basic project with ChibiOS/RT + HAL on 
+ * STMicroelectronics NUCLEO64F401RE development board
  */
-static THD_WORKING_AREA(waThread1, 128);
-static THD_FUNCTION(Thread1, arg) {
 
-  (void)arg;
-  chRegSetThreadName("blinker");
-  while (true) {
-    palClearPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
-    palSetPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
-  }
-}
+#include "ch.h"
+#include "hal.h"
+
 
 /*
  * Application entry point.
@@ -51,24 +41,11 @@ int main(void) {
   chSysInit();
 
   /*
-   * Activates the serial driver 2 using the driver default configuration.
-   */
-  sdStart(&SD2, NULL);
-
-  /*
-   * Creates the blinker thread.
-   */
-  chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO + 1, Thread1, NULL);
-
-  /*
    * Normal main() thread activity, in this demo it does nothing except
    * sleeping in a loop and check the button state.
    */
   while (true) {
-    if (!palReadPad(GPIOC, GPIOC_BUTTON)) {
-      test_execute((BaseSequentialStream *)&SD2, &rt_test_suite);
-      test_execute((BaseSequentialStream *)&SD2, &oslib_test_suite);
-    }
+    palTogglePad(GPIOA, GPIOA_LED_GREEN);
     chThdSleepMilliseconds(500);
   }
 }

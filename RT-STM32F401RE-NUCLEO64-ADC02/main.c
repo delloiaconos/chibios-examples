@@ -103,9 +103,8 @@ static THD_FUNCTION( thdLed, arg ) {
     float chX, chY;
     int i;
 
-    adcStartConversion(&ADCD1, &adcgrpcfg, samples, ADC_GRP_BUF_DEPTH);
-
     chSysLock();
+    adcStartConversionI(&ADCD1, &adcgrpcfg, samples, ADC_GRP_BUF_DEPTH);
     msg = chThdSuspendS(&trp);
     chSysUnlock();
 

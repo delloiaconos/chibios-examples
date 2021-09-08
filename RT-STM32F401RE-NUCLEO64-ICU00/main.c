@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2020 Examples
-    Copyright (C) 2020
+    NeaPolis Innovation Summer Campus 2021 Examples
+    Copyright (C) 2020-2021
     - Salvatore Dello Iacono [delloiaconos@gmail.com]
     - Matteo Caiazzo
     - Ciro Mazzocchi

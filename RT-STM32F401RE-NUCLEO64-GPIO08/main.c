@@ -1,9 +1,6 @@
 /*
     NeaPolis Innovation Summer Campus 2021 Examples
-    Copyright (C) 2020-2021
-    - Salvatore Dello Iacono [delloiaconos@gmail.com]
-    - Matteo Caiazzo
-    - Ciro Mazzocchi
+    Copyright (C) 2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,43 +15,42 @@
     limitations under the License.
 */
 
-
 /*
- * [ICU00] Using ICU Peripheral and Driver - Example 00
+ * [GPIO08] Using GPIO Peripherals - Example 08
+ * How to use listeners and callbacks to measure time
  */
 
 #include "ch.h"
 #include "hal.h"
-#include "chprintf.h"
+
+#define BTN_PORT     GPIOC
+#define BTN_PIN      GPIOC_BUTTON
+#define BTN_LINE     PAL_LINE( BTN_PORT, BTN_PIN )
 
 
-BaseSequentialStream * chp = (BaseSequentialStream*) &SD2;
+static uint32_t time;
 
-#define ICU_FREQUENCY           1000
+static void button_cb(void *arg) {
 
-int counter = 0;
+  (void)arg;
 
-static void icuperiodcb(ICUDriver *icup) {
-  (void)icup;
-  counter = counter + 1;
+  static systime_t start, stop;
+  chSysLockFromISR();
+  if( palReadLine( BTN_LINE ) == PAL_LOW ) {
+    start = chVTGetSystemTimeX();
+  } else {
+    sysinterval_t delta;
+    stop = chVTGetSystemTimeX();
+    delta = chTimeDiffX( start, stop );
+    time = TIME_I2MS( delta );
+  }
+  chSysUnlockFromISR();
 }
-
-static ICUConfig icucfg = {
-  ICU_INPUT_ACTIVE_HIGH,
-  ICU_FREQUENCY,
-  NULL,
-  icuperiodcb,
-  NULL,
-  ICU_CHANNEL_1,
-  0U,
-  0xFFFFFFFFU
-};
 
 /*
  * Application entry point.
  */
 int main(void) {
-
   /*
    * System initializations.
    * - HAL initialization, this also initializes the configured device drivers
@@ -65,27 +61,14 @@ int main(void) {
   halInit();
   chSysInit();
 
+  /* Enabling events on both edges of the button line.*/
+  palEnableLineEvent( BTN_LINE, PAL_EVENT_MODE_BOTH_EDGES);
+  palSetLineCallback( BTN_LINE, button_cb, NULL);
+
   /*
-   * Activates the serial driver 2 using the driver default configuration.
+   * Normal main() thread activity.
    */
-  sdStart(&SD2, NULL);
-
-
-  palSetPadMode(GPIOA, 0, PAL_MODE_ALTERNATE(2));
-
-  icuStart(&ICUD5, &icucfg);
-  icuStartCapture(&ICUD5);
-  icuEnableNotifications(&ICUD5);
-  chThdSleepMilliseconds(2000);
-
   while (true) {
-    chprintf( chp, "Counter = %d\n\r", counter);
-    chThdSleepMilliseconds(1000);
+    chThdSleepMilliseconds( 1000 );
   }
-
-  icuStopCapture(&ICUD5);
-  icuStop(&ICUD5);
-
-  return 0;
 }
-

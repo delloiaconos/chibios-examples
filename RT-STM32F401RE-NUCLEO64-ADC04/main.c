@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus 2022 Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 */
 
 /*
- * [ADC01] Using ADC Peripherals - Example 04
- * ADC Acquisition with Timer as trigger.
+ * [NISC2022-ADC04] - ADC Example 04
+ * DESCRIPTION: TIMER triggered ADC conversion.
+ *
  */
-
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"
@@ -96,9 +96,9 @@ static const ADCConversionGroup adcgrpcfg = {
   ADC_SQR3_SQ2_N(ADC_CHANNEL_IN11) | ADC_SQR3_SQ1_N(ADC_CHANNEL_IN10) /* SQR3 */
 };
 
-
-static THD_WORKING_AREA( waLed, 256 );
-static THD_FUNCTION( thdLed, arg ) {
+#define WA_ADC_SIZE         256
+static THD_WORKING_AREA( waAdc, WA_ADC_SIZE );
+static THD_FUNCTION( thdAdc, arg ) {
   systime_t start, stop;
   sysinterval_t delta;
 
@@ -146,13 +146,13 @@ static THD_FUNCTION( thdLed, arg ) {
     /*
      * Check the message and inform the user
      */
+    chprintf( chp, "\033[H" );
+    chprintf( chp, "Elapsed = %d ms\n\r" , TIME_I2MS( delta ) );
+
     if( (uint32_t) msg == MSG_ADC_OK ) {
-      chprintf( chp, "Elapsed = %d ms\n\r", TIME_I2MS( delta ) );
       chprintf( chp, "X channel = %4.1f %%\n\r", chX );
       chprintf( chp, "Y channel = %4.1f %%\n\r", chY );
-
     } else {
-      chprintf( chp, "Elapsed = %d ms\r\n" , TIME_I2MS( delta ) );
       chprintf( chp, "Error!\r\n" );
     }
 
@@ -171,11 +171,11 @@ int main(void) {
 
   sdStart( &SD2, NULL );
 
-  chThdCreateStatic( waLed, sizeof( waLed), NORMALPRIO + 5, thdLed, (void*) NULL );
+  chThdCreateStatic( waAdc, sizeof( waAdc ), NORMALPRIO + 1, thdAdc, (void*) NULL );
 
   while (true) {
     palToggleLine( LINE_LED_GREEN );
     chThdSleepMilliseconds(500);
   }
-
 }
+

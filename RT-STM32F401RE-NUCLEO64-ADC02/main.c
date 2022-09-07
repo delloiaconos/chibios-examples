@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus 2022 Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,18 +16,19 @@
 */
 
 /*
- * [ADC02] Using ADC Peripherals - Example 02
- * How to user asynchronous conversion call.
+ * [NISC2022-ADC02] - ADC Example 02
+ * DESCRIPTION: How to user asynchronous conversion call.
  *
  */
+
 #include "ch.h"
 #include "hal.h"
 
+/* External Leds definitions */
+#define LEDX_LINE               PAL_LINE( GPIOA, 0 ) // ARDUINO A0 (CN8.1)
+#define LEDY_LINE               PAL_LINE( GPIOA, 1 ) // ARDUINO A1 (CN8.2)
 
 #define VOLTAGE_RES            ((float)3.3/4096)
-
-#define LEDX_LINE               PAL_LINE( GPIOB, 10 )
-#define LEDY_LINE               PAL_LINE( GPIOA, 8 )
 
 #define MSG_ADC_OK               0x1337
 #define MSG_ADC_KO               0x7331
@@ -81,17 +82,20 @@ static const ADCConversionGroup adcgrpcfg = {
 
 
 static float converted[ADC_GRP_NUM_CHANNELS];
-static THD_WORKING_AREA( waLed, 128 );
-static THD_FUNCTION( thdLed, arg ) {
+#define WA_ADC_SIZE         256
+static THD_WORKING_AREA( waAdc, WA_ADC_SIZE );
+static THD_FUNCTION( thdAdc, arg ) {
   (void) arg;
+
+  chRegSetThreadName( "led" );
 
   palSetLineMode( LEDX_LINE, PAL_MODE_OUTPUT_PUSHPULL );
   palSetLineMode( LEDY_LINE, PAL_MODE_OUTPUT_PUSHPULL );
 
   /*
    * Group setting as analog input:
-   *    PORTC PIN 0 -> ADC1_CH10
-   *    PORTC PIN 1 -> ADC1_CH11
+   *    PORTC PIN 0 -> ADC1_CH10 -> ARDUINO A5 (CN8.6)
+   *    PORTC PIN 1 -> ADC1_CH11 -> ARDUINO A4 (CN8.5)
    */
   palSetGroupMode(GPIOC, PAL_PORT_BIT(0) | PAL_PORT_BIT(1),
                   0, PAL_MODE_INPUT_ANALOG);
@@ -156,8 +160,7 @@ int main(void) {
   halInit();
   chSysInit();
 
-
-  chThdCreateStatic( waLed, sizeof( waLed), NORMALPRIO + 5, thdLed, (void*) NULL );
+  chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO + 1, thdAdc, (void*) NULL );
 
   while (true) {
     palToggleLine( LINE_LED_GREEN );
@@ -166,3 +169,4 @@ int main(void) {
 
   adcStop(&ADCD1);
 }
+

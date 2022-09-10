@@ -24,14 +24,15 @@
 #include "ch.h"
 #include "hal.h"
 
-
+/* External Button: Port, Pin, Line */
 #define EBTN_PORT     GPIOC
 #define EBTN_PIN      7U
 #define EBTN_LINE     PAL_LINE( EBTN_PORT, EBTN_PIN )
 
+/* External LEDs: Port, Pin, Line */
 #define BLED_PORT    GPIOA
-#define BLED_PIN     7U
-#define BLED_LINE    PAL_LINE( BLED_PORT, BLED_PIN )
+#define BLED_PIN     4U
+#define BLED_LINE    PAL_LINE( BLED_PORT, BLED_PIN ) // ARDUINO A2 (CN8.3)
 
 /*
  * This global flag variable will communicate if the button was pressed!

@@ -28,6 +28,8 @@ You can read and travel the examples as you desire, but the suggested path is th
 - GPIO02 - PAL Line usage.
 - GPIO03 - Reading the on-board user button.
 - GPIO04 - A simple way to debounce an external button.
+- GPIO05 - Multithreading use of GPIO with button and LED.
+- GPIO06 - Iterate through an array of output lines.
 
 ### ADC
 - ADC00 - ADC Base Project.

@@ -1,4 +1,4 @@
-# NeaPolis Innvoation Summer Campus 2022 Examples
+# NeaPolis Innvoation Summer Campus Examples
 Examples made for ChibiOS/RT + HAL during the NeaPolis Innovation Summer Campus 2022.
 
 These examples have been tested on ChibiStudio 2022-01 for Windows. 
@@ -17,10 +17,11 @@ These examples were made by Student Tutors and NeaPolis Innovation Summer Campus
 You can read and travel the examples as you desire, but the suggested path is the following:
 ** Only here listed examples have been updated and tested!**
 
-1 - GPIOs Examples (To Be Done...)
-2 - ChibiOS Thread Examples 
-3 - UART and SERIAL (To Be Done...)
-4 - Analog to Digital Converter Examples (ADC)
+1 - [x] GPIOs Examples 
+2 - [x] ChibiOS Thread Examples 
+3 - [ ] UART and SERIAL
+4 - [x] Analog to Digital Converter Examples (ADC)
+5 - [ ] ChibiOS Shell Examples
 
 ### GPIO
 - GPIO00 - Onboard Green LED Toggling.

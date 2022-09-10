@@ -27,6 +27,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - GPIO01 - Generic output PIN configuration and use.
 - GPIO02 - PAL Line usage.
 - GPIO03 - Reading the on-board user button.
+- GPIO04 - A simple way to debounce an external button.
 
 ### ADC
 - ADC00 - ADC Base Project.

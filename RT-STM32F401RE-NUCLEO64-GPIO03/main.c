@@ -17,38 +17,29 @@
 
 /*
  * [NISC2022-GPIO03] - Reading the on-board user button.
- * DESCRIPTION: How to use a GPIO PIN as an User Input.
+ * DESCRIPTION: Read the LINE_BUTTON that refers to the USER button on the
+ * NUCLEO-64 Board and if it has been pressed (condition PAL_LOW) turn-on
+ * the on-board LED.
  */
 
 #include "ch.h"
 #include "hal.h"
-
-#include "ch.h"
-#include "hal.h"
-
-/* Green LED: Port, Pin and Line */
-#define LED_PORT   GPIOA
-#define LED_PIN    5U
-#define LED_LINE   PAL_LINE( LED_PORT, LED_PIN )
-
-/* User Button: Port, Pin and Line */
-#define BTN_PORT   GPIOC
-#define BTN_PIN    13U
-#define BTN_LINE   PAL_LINE( BTN_PORT, BTN_PIN )
 
 int main(void) {
 
   halInit();
   chSysInit();
 
-  palSetLineMode( LED_LINE, PAL_MODE_OUTPUT_PUSHPULL );
-  palSetLineMode( BTN_LINE, PAL_MODE_INPUT );
+  while (true) {
+      /*
+       * Check if button is pressed.
+       */
+      if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+        palSetLine( LINE_LED_GREEN );
+      } else {
+        palClearLine( LINE_LED_GREEN );
+      }
 
-  while( 1 ) {
-    int btnState;
-
-    btnState = palReadLine( BTN_LINE );
-    palWriteLine( LED_LINE, btnState );
-    chThdSleepMilliseconds( 200 );
+      chThdSleepMilliseconds( 25 );
   }
 }

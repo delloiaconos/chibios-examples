@@ -1,5 +1,5 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
+    NeaPolis Innovation Summer Campus 2021 Examples
     Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +16,8 @@
 */
 
 /*
- * [GPIO01] Using GPIO Peripherals - Example 02
- * How to use the GPIO peripheral to control an external LED connected to GPIOA pin #5
+ * [NISC2022-GPIO02] - PAL Line usage.
+ * DESCRIPTION: How to use the HAL GPIO Line to write on generic PIN.
  */
 
 #include "ch.h"
@@ -28,6 +28,7 @@
  */
 #define LED_PORT    GPIOA
 #define LED_PIN     6U
+#define LED_LINE    PAL_LINE( LED_PORT, LED_PIN )
 
 int main(void) {
 
@@ -37,13 +38,13 @@ int main(void) {
   /*
    * Setup the port as an OUTPUT with PUSH/PULL capabilities
    */
-  palSetPadMode( LED_PORT, LED_PIN, PAL_MODE_OUTPUT_PUSHPULL );
+  palSetLineMode( LED_LINE, PAL_MODE_OUTPUT_PUSHPULL );
 
   while (true) {
-      palClearPad(LED_PORT, LED_PIN);
+      palWriteLine(LED_LINE, PAL_LOW);
       chThdSleepMilliseconds(1000);
 
-      palSetPad(LED_PORT, LED_PIN);
+      palWriteLine(LED_LINE, PAL_HIGH);
       chThdSleepMilliseconds(250);
   }
 }

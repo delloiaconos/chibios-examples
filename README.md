@@ -25,6 +25,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 ### GPIO
 - GPIO00 - Onboard Green LED Toggling.
 - GPIO01 - Generic output PIN configuration and use.
+- GPIO02 - PAL Line usage.
 
 ### ADC
 - ADC00 - ADC Base Project.

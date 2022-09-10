@@ -17,7 +17,7 @@
 
 /*
  * [NISC2022-GPIO01] - Generic output PIN configuration and use.
- * DESCRIPTION: How to use the GPIO peripheral to blink a generic PIN.
+ * DESCRIPTION: How to use the HAL GPIO driver to blink a generic PIN.
  */
 
 #include "ch.h"

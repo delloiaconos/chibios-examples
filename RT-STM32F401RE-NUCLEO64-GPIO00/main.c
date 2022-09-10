@@ -16,38 +16,24 @@
 */
 
 /*
- * [NISC2022-GPIO01] - Generic output PIN configuration and use.
- * DESCRIPTION: How to use the GPIO peripheral to blink a generic PIN.
+ * [NISC2022-GPIO00] - Onboard Green LED Toggling.
+ * DESCRIPTION: Simplest project using ChibiOS-RT and HAL PAL driver on
+ * STM32 Nucleo-64 Onboard Green LED.
  */
 
 #include "ch.h"
 #include "hal.h"
 
-/* Green LED: Port, Pin definitions */
-#define LED_PORT   GPIOA
-#define LED_PIN    5U
-
 int main(void) {
 
   halInit();
   chSysInit();
-  
-  /*
-   * Configure the LED_PIN at LED_PORT in Output (pushpull) mode
-   */
-  palSetPadMode( LED_PORT, LED_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 
-  while (true) {
+  while( 1 ) {
       /*
-       * Set GPIOA LED_PIN pin to logic LOW and wait
+       * Invert GPIOA LED_GREEN pin Output and wait
        */
-      palClearPad(GPIOA, LED_PIN);
+      palTogglePad(GPIOA, GPIOA_LED_GREEN);
       chThdSleepMilliseconds(1000);
-
-      /*
-       * Set GPIOA LED_PIN pin to logic HIGH and wait
-       */
-      palSetPad(GPIOA, LED_PIN);
-      chThdSleepMilliseconds(250);
   }
 }

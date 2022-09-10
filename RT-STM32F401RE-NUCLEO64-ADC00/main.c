@@ -16,7 +16,7 @@
 */
 
 /*
- * [NISC2022-ADC00] - ADC Example 00
+ * [NISC2022-ADC00] - ADC Base Project.
  * DESCRIPTION: Base demo to include the ADC into your NUCLEO64 based project.
  */
 

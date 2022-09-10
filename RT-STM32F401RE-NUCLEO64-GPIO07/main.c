@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,68 +16,49 @@
 */
 
 /*
- * [GPIO07] Using GPIO Peripherals - Example 07
- * How use a thread to read the user input and a thread to manage the LED.
+ * [NISC2022-GPIO08] - How to use PAL Events and callbacks to measure time.
+ * DESCRIPTION: Use of event callbacks to measure time with Virtual Timer System Time.
+ * NOTE: Enable PAL_USE_CALLBACKS in halconf.h
  */
 
 #include "ch.h"
 #include "hal.h"
 
-
-#define EXTBTN_PORT     GPIOC
-#define EXTBTN_PIN      7U
-#define EXTBTN_LINE     PAL_LINE( EXTBTN_PORT, EXTBTN_PIN )
-
-
-#define LED_BLU_PORT    GPIOA
-#define LED_BLU_PIN     7U
-#define LED_BLU_LINE    PAL_LINE( LED_BLU_PORT, LED_BLU_PIN )
-
 /*
- * This global flag variable will communicate if the button was pressed!
+ * Shared Variable: time
  */
-static uint32_t flag = 0;
+static uint32_t time;
 
-/*
- * Working Area and Thread declarations.
- */
-static THD_WORKING_AREA( waLed, 128 );
-static THD_FUNCTION( thdLed, arg ) {
-  (void) arg;
+static void button_cb(void *arg) {
 
-  palSetLineMode( LED_BLU_LINE, PAL_MODE_OUTPUT_PUSHPULL );
-  while( 1 ) {
-    /* If the flag equals to 1 than:
-     * 1- the flag becomes 0 (again)
-     * 2- the led toggled
-     */
-    if( flag == 1 ) {
-      flag = 0;
-      palToggleLine( LED_BLU_LINE );
-    }
-    chThdSleepMilliseconds( 200 );
+  (void)arg;
+
+  static systime_t start, stop;
+  chSysLockFromISR();
+  if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+    start = chVTGetSystemTimeX();
+  } else {
+    sysinterval_t delta;
+    stop = chVTGetSystemTimeX();
+    delta = chTimeDiffX( start, stop );
+    time = TIME_I2MS( delta );
   }
+  chSysUnlockFromISR();
 }
 
-
+/*
+ * Application entry point.
+ */
 int main(void) {
 
   halInit();
   chSysInit();
 
-  chThdCreateStatic(waLed, sizeof(waLed), NORMALPRIO + 1, thdLed, NULL );
+  /* Enabling events on both edges of the button line.*/
+  palEnableLineEvent( LINE_BUTTON, PAL_EVENT_MODE_BOTH_EDGES);
+  palSetLineCallback( LINE_BUTTON, button_cb, NULL);
 
-  palSetLineMode( EXTBTN_LINE, PAL_MODE_INPUT );
   while (true) {
-    /* This loop does not set the flag variable to 0 */
-
-    if( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
-      while( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
-        chThdSleepMilliseconds(20);
-      }
-      flag = 1;
-    }
-
-    chThdSleepMilliseconds(20);
+    chThdSleepMilliseconds( 1000 );
   }
 }

@@ -30,6 +30,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - GPIO04 - A simple way to debounce an external button.
 - GPIO05 - Multithreading use of GPIO with button and LED.
 - GPIO06 - Iterate through an array of output lines.
+- GPIO07 - How to use PAL Events and callbacks to measure time.
 
 ### ADC
 - ADC00 - ADC Base Project.

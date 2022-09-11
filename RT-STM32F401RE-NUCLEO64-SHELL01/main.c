@@ -19,6 +19,8 @@
  * [NISC2022-SHELL01] - Static shell thread with custom commands and configuration.
  * DESCRIPTION: Demo modified to accept new commands, removed EXIT and TEST commands
  * from standard configuration.
+ * - Tests commands are disabled
+ * - Exit command is disabled
  */
 
 #include "ch.h"

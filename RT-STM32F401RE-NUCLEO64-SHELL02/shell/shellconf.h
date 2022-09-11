@@ -26,11 +26,11 @@
 
 
 #define SHELL_CMD_EXIT_ENABLED              FALSE
-#define SHELL_CMD_INFO_ENABLED              TRUE
-#define SHELL_CMD_ECHO_ENABLED              TRUE
-#define SHELL_CMD_SYSTIME_ENABLED           TRUE
-#define SHELL_CMD_MEM_ENABLED               TRUE
-#define SHELL_CMD_THREADS_ENABLED           TRUE
+#define SHELL_CMD_INFO_ENABLED              FALSE
+#define SHELL_CMD_ECHO_ENABLED              FALSE
+#define SHELL_CMD_SYSTIME_ENABLED           FALSE
+#define SHELL_CMD_MEM_ENABLED               FALSE
+#define SHELL_CMD_THREADS_ENABLED           FALSE
 #define SHELL_CMD_TEST_ENABLED              FALSE
 
 #endif // __SHELLCONF_H__

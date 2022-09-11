@@ -35,9 +35,9 @@
 			<locationURI>CHIBIOS/os</locationURI>
 		</link>
 		<link>
-			<name>test</name>
+			<name>shell</name>
 			<type>2</type>
-			<locationURI>CHIBIOS/test</locationURI>
+			<location>C:/ChibiStudio/chibios2111/os/various/shell</location>
 		</link>
 	</linkedResources>
 </projectDescription>

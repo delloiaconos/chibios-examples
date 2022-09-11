@@ -17,11 +17,11 @@ These examples were made by Student Tutors and NeaPolis Innovation Summer Campus
 You can read and travel the examples as you desire, but the suggested path is the following:
 ** Only here listed examples have been updated and tested!**
 
-1 - [x] GPIOs Examples 
-2 - [x] ChibiOS Thread Examples 
-3 - [ ] UART and SERIAL
-4 - [x] Analog to Digital Converter Examples (ADC)
-5 - [ ] ChibiOS Shell Examples
+- [x] GPIOs Examples 
+- [x] ChibiOS Thread Examples 
+- [ ] UART and SERIAL
+- [x] Analog to Digital Converter Examples (ADC)
+- [ ] ChibiOS Shell Examples
 
 ### GPIO
 - GPIO00 - Onboard Green LED Toggling.
@@ -40,4 +40,6 @@ You can read and travel the examples as you desire, but the suggested path is th
 - ADC03 - Asynchronous sampling and over serial display.
 - ADC04 - TIMER triggered ADC conversion.
 
- 
+### SHELL
+- SHELL00 - ChibiOS adapted Demo Project.
+- SHELL01 - Static shell thread with custom commands and configuration.

@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
 */
 
 /*
- * [SHELL00] Using the SHELL - Example 00
- * An example project with the shell imported for the STM32 NUCLEO64-F401
- * development board.
+ * [NISC2022-SHELL00] - ChibiOS adapted Demo Project.
+ * DESCRIPTION: Import, adpat and build shell example STM32-USB_CDC.
  */
 
 #include "ch.h"
@@ -32,8 +31,6 @@
 /*===========================================================================*/
 
 #define SHELL_WA_SIZE   THD_WORKING_AREA_SIZE(2048)
-static uint32_t counter = 0;
-
 
 /* Can be measured using dd if=/dev/xxxx of=/dev/null bs=512 count=10000.*/
 static void cmd_write(BaseSequentialStream *chp, int argc, char *argv[]) {
@@ -62,34 +59,13 @@ static void cmd_write(BaseSequentialStream *chp, int argc, char *argv[]) {
   }
 
   while (chnGetTimeout((BaseChannel *)chp, TIME_IMMEDIATE) == Q_TIMEOUT) {
-#if 1
-    /* Writing in channel mode.*/
     chnWrite(&SD2, buf, sizeof buf - 1);
-#else
-    /* Writing in buffer mode.*/
-    (void) obqGetEmptyBufferTimeout(&SD2.obqueue, TIME_INFINITE);
-    memcpy(SD2.obqueue.ptr, buf, SERIAL_USB_BUFFERS_SIZE);
-    obqPostFullBuffer(&SD2.obqueue, SERIAL_USB_BUFFERS_SIZE);
-#endif
   }
   chprintf(chp, "\r\n\nstopped\r\n");
 }
 
-static void cmd_count(BaseSequentialStream *chp, int argc, char *argv[]) {
-
-  (void)argv;
-  if (argc > 0) {
-    chprintf(chp, "Usage: count\r\n");
-  }
-  else {
-    counter++;
-    chprintf(chp, "%d\r\n", counter);
-  }
-}
-
 static const ShellCommand commands[] = {
   {"write", cmd_write},
-  {"count", cmd_count},
   {NULL, NULL}
 };
 
@@ -98,15 +74,23 @@ static const ShellConfig shell_cfg1 = {
   commands
 };
 
-static THD_WORKING_AREA(waThd1, 256);
-static THD_FUNCTION(Thd1, arg){
-  (void) arg;
-  chRegSetThreadName("Thread 1");
-  while(TRUE){
-    palClearPad(GPIOA, GPIOA_LED_GREEN);
-        chThdSleepMilliseconds(500);
-        palSetPad(GPIOA, GPIOA_LED_GREEN);
-        chThdSleepMilliseconds(500);
+/*===========================================================================*/
+/* Generic code.                                                             */
+/*===========================================================================*/
+
+/*
+ * LED blinker thread, times are in milliseconds.
+ */
+static THD_WORKING_AREA(waThread1, 128);
+static THD_FUNCTION(Thread1, arg) {
+
+  (void)arg;
+  chRegSetThreadName("blinker");
+  while (true) {
+    palClearLine( LINE_LED_GREEN );
+    chThdSleepMilliseconds( 250 );
+    palSetLine( LINE_LED_GREEN );
+    chThdSleepMilliseconds( 250 );
   }
 }
 
@@ -114,6 +98,7 @@ static THD_FUNCTION(Thd1, arg){
  * Application entry point.
  */
 int main(void) {
+
   /*
    * System initializations.
    * - HAL initialization, this also initializes the configured device drivers
@@ -125,22 +110,33 @@ int main(void) {
   chSysInit();
 
   /*
+   * Initializes a SERIAL driver.
+   */
+  palSetPadMode( GPIOA, 2, PAL_MODE_ALTERNATE(7) );
+  palSetPadMode( GPIOA, 3, PAL_MODE_ALTERNATE(7) );
+
+  sdStart(&SD2, NULL);
+
+  /*
    * Shell manager initialization.
    */
   shellInit();
 
-  chThdCreateStatic(waThd1, sizeof(waThd1), NORMALPRIO + 1,
-                    Thd1, NULL);
-  sdStart(&SD2, NULL);
+  /*
+   * Creates the blinker thread.
+   */
+  chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO, Thread1, NULL);
 
   /*
-   * Normal main() thread activity, in this demo it does nothing except
-   * sleeping in a loop and check the button state.
+   * Normal main() thread activity, spawning shells.
    */
   while (true) {
-    thread_t *shelltp = chThdCreateFromHeap(NULL, SHELL_WA_SIZE, "shell", NORMALPRIO + 1,
-                                            shellThread, (void *)&shell_cfg1);
 
+    thread_t *shelltp = chThdCreateFromHeap(NULL, SHELL_WA_SIZE,
+                                            "shell", NORMALPRIO + 1,
+                                            shellThread, (void *)&shell_cfg1);
     chThdWait(shelltp);               /* Waiting termination.             */
+
+    chThdSleepMilliseconds(1000);
   }
 }

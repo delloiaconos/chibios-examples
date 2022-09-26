@@ -47,3 +47,9 @@ You can read and travel the examples as you desire, but the suggested path is th
 - SHELL01 - Static shell thread with custom commands and configuration.
 - SHELL02 - Project with local custom shell.
 - SHELL03 - Using the shell as a menu.
+
+### ICU 
+- ICU00 - Simple example with ICU
+
+### PWM
+- PWM00 - Simple exampl with PWM

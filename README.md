@@ -5,6 +5,8 @@ These examples have been tested on ChibiStudio 2022-01 for Windows.
 You can download this version of the development environment at
 [OSDN ChibStudio Project](https://osdn.net/projects/chibios/downloads/70767/ChibiStudio_Windows_2022-01.7z/)
 
+ChibiOS version:[ChibiOS 21.11.x](https://github.com/ChibiOS/ChibiOS/tree/stable_21.11.x)
+
 These examples were made by Student Tutors and NeaPolis Innovation Summer Campus collaborators.
 
 ## Running examples

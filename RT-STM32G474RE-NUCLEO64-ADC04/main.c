@@ -15,6 +15,7 @@
 /*
  * [ADC04] Using ADC Peripherals - Example 04
  * ADC Acquisition triggered by a Timer.
+ * This example makes use of ARDUINO A0 and A1 pins.
  */
 
 #include "ch.h"

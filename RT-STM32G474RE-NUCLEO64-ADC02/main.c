@@ -118,7 +118,8 @@ static THD_FUNCTION( thdAdc, arg ) {
     int i;
 
     chSysLock();
-    adcStartConversionI(&ADCD1, &adcgrpcfg, samples, ADC_GRP_BUF_DEPTH);
+    adcStartConversionI( &ADCD1, &adcgrpcfg,
+                         samples, ADC_GRP_BUF_DEPTH );
     msg = chThdSuspendS(&trp);
     chSysUnlock();
 

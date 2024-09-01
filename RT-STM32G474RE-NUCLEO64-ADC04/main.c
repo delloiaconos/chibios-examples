@@ -15,7 +15,10 @@
 /*
  * [ADC04] Using ADC Peripherals - Example 04
  * ADC Acquisition triggered by a Timer.
- * This example makes use of ARDUINO A0 and A1 pins.
+ * This example makes use of ARDUINO A0 and A1 pins. ADC is configured
+ * to execute a continuous acquisition on a circula buffer triggerd by
+ * STM32 TIM4. The ADC Thread waits for the message to arrive and then
+ * calculates and sends over serial the elapsed time.
  */
 
 #include "ch.h"
@@ -31,7 +34,6 @@ BaseSequentialStream * chp = (BaseSequentialStream *) &SD2;
 /*
  * GPT4 configuration. This timer is used as trigger for the ADC.
  */
-
 const GPTConfig gpt4cfg = {
   .frequency    =  1000000U,
   .callback     =  NULL,
@@ -49,8 +51,6 @@ static float converted[ADC_GRP_NUM_CHANNELS] = { 0.0f };
 
 static void adccallback(ADCDriver *adcp) {
   int i;
-
-  palToggleLine( LINE_LED_GREEN );
 
   if (adcIsBufferComplete(adcp)) {
     for( i = 0; i < ADC_GRP_NUM_CHANNELS; i++ ) {
@@ -107,12 +107,20 @@ const ADCConversionGroup adcgrpcfg = {
 };
 
 
-static THD_WORKING_AREA( waLed, 256 );
-static THD_FUNCTION( thdLed, arg ) {
+static THD_WORKING_AREA( waAdc, 256 );
+static THD_FUNCTION( thdAdc, arg ) {
   systime_t start, stop;
   sysinterval_t delta;
 
   (void) arg;
+
+  /*
+   * Activates the serial driver 2 using the A2 and A3 pins.
+   */
+  palSetPadMode( GPIOA, 2, PAL_MODE_ALTERNATE(7) );
+  palSetPadMode( GPIOA, 3, PAL_MODE_ALTERNATE(7) );
+
+  sdStart( &SD2, NULL );
 
   /*
    * ADC input:
@@ -164,7 +172,6 @@ static THD_FUNCTION( thdLed, arg ) {
       chprintf( chp, "Elapsed = %d ms\n\r", TIME_I2MS( delta ) );
       chprintf( chp, "X channel = %4.1f %%\n\r", chX );
       chprintf( chp, "Y channel = %4.1f %%\n\r", chY );
-
     } else {
       chprintf( chp, "Elapsed = %d ms\r\n" , TIME_I2MS( delta ) );
       chprintf( chp, "Error!\r\n" );
@@ -183,17 +190,10 @@ int main(void) {
   halInit();
   chSysInit();
 
-  /*
-   * Activates the serial driver 2 using the A2 and A3 pins.
-   */
-  palSetPadMode( GPIOA, 2, PAL_MODE_ALTERNATE(7) );
-  palSetPadMode( GPIOA, 3, PAL_MODE_ALTERNATE(7) );
-
-  sdStart( &SD2, NULL );
-
-  chThdCreateStatic( waLed, sizeof( waLed), NORMALPRIO + 5, thdLed, (void*) NULL );
+  chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO + 5, thdAdc, (void*) NULL );
 
   while (true) {
+    palToggleLine( LINE_LED_GREEN );
     chThdSleepMilliseconds(500);
   }
 

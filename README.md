@@ -17,6 +17,10 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [ ] UART and SERIAL Peripheral
 - [x] ADC (Analog to Digital Converter) Peripheral 
 - [ ] DAC (Digital to Analog Converter) Peripheral 
+- [ ] TIMER Peripheral
+    - [ ] GPT (General Purpose Timer) Drivers
+    - [x] ICU (Interrupt Capture Unit) Drivers
+    - [ ] PWM (Pulse Width Modulation) Driver
 - [ ] ChibiOS Thread Examples 
 - [ ] ChibiOS Shell Examples
 
@@ -44,7 +48,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [ ] SHELL03 - Using the shell as a menu.
 
 ### ICU 
-- [ ] ICU00 - Simple example with ICU
+- [x] ICU00 - Simple example with ICU
 
 ### PWM
 - [ ] PWM00 - Simple exampl with PWM

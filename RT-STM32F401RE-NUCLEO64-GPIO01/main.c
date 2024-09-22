@@ -30,15 +30,9 @@ int main(void) {
 
   while (true) {
       /*
-       * Set GPIOA LED_GREEN pin to logic LOW and wait
+       * Invert GPIOA LED_GREEN pin and wait 1000 ms.
        */
       palClearPad(GPIOA, GPIOA_LED_GREEN);
       chThdSleepMilliseconds(1000);
-
-      /*
-       * Set GPIOA LED_GREEN pin to logic HIGH and wait
-       */
-      palSetPad(GPIOA, GPIOA_LED_GREEN);
-      chThdSleepMilliseconds(250);
   }
 }

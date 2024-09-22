@@ -40,9 +40,15 @@ int main(void) {
   palSetPadMode( LED_PORT, LED_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 
   while (true) {
+      /*
+       * Set LED_PORT pin to logic LOW and wait 1000 ms.
+       */
       palClearPad(LED_PORT, LED_PIN);
       chThdSleepMilliseconds(1000);
 
+      /*
+       * Set LED_PORT pin to logic HIGH and wait 250ms
+       */
       palSetPad(LED_PORT, LED_PIN);
       chThdSleepMilliseconds(250);
   }

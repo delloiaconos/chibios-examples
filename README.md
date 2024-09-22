@@ -21,33 +21,33 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [ ] ChibiOS Shell Examples
 
 ### GPIO
-- [u] GPIO01 - Onboard Green LED Toggling.
+- [x] GPIO01 - Onboard Green LED Toggling.
 - [x] GPIO02 - Generic output PIN configuration and use.
-- [x] GPIO03 - PAL Line usage.
-- [x] GPIO04 - Reading the on-board user button.
-- [x] GPIO05 - A simple way to debounce an external button.
-- [x] GPIO06 - Multithreading use of GPIO with button and LED.
-- [x] GPIO07 - Iterate through an array of output lines.
-- [x] GPIO08 - How to use PAL Events and callbacks to measure time.
+- [x] GPIO03 - PAL LINE usage and Thread example.
+- [ ] GPIO04 - Reading the on-board user button.
+- [ ] GPIO05 - A simple way to debounce an external button.
+- [ ] GPIO06 - Multithreading use of GPIO with button and LED.
+- [ ] GPIO07 - Iterate through an array of output lines.
+- [ ] GPIO08 - How to use PAL Events and callbacks to measure time.
 
 ### ADC
-- [x] ADC00 - ADC Base Project.
-- [x] ADC01 - Simple project with single acquisition from a single channel.
-- [x] ADC02 - Asynchronous conversion call.
-- [x] ADC03 - Asynchronous sampling and over serial display.
-- [x] ADC04 - TIMER triggered ADC conversion.
+- [ ] ADC00 - ADC Base Project.
+- [ ] ADC01 - Simple project with single acquisition from a single channel.
+- [ ] ADC02 - Asynchronous conversion call.
+- [ ] ADC03 - Asynchronous sampling and over serial display.
+- [ ] ADC04 - TIMER triggered ADC conversion.
 
 ### SHELL
-- [x] SHELL00 - ChibiOS adapted Demo Project.
-- [x] SHELL01 - Static shell thread with custom commands and configuration.
-- [x] SHELL02 - Project with local custom shell.
-- [x] SHELL03 - Using the shell as a menu.
+- [ ] SHELL00 - ChibiOS adapted Demo Project.
+- [ ] SHELL01 - Static shell thread with custom commands and configuration.
+- [ ] SHELL02 - Project with local custom shell.
+- [ ] SHELL03 - Using the shell as a menu.
 
 ### ICU 
-- [x] ICU00 - Simple example with ICU
+- [ ] ICU00 - Simple example with ICU
 
 ### PWM
-- [x] PWM00 - Simple exampl with PWM
+- [ ] PWM00 - Simple exampl with PWM
 
 
 ## Running examples

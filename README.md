@@ -34,7 +34,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] ADC00 - ADC Base Project.
 - [x] ADC01 - Simple single acquisition/channel ADC in a thread.
 - [x] ADC02 - Asynchronous conversion call.
-- [ ] ADC03 - Asynchronous sampling and over serial display.
+- [x] ADC03 - Asynchronous sampling and over serial display.
 - [ ] ADC04 - TIMER triggered ADC conversion.
 
 ### SHELL

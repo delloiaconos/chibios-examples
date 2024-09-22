@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2022 Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,17 +16,13 @@
 */
 
 /*
- * [NISC2022-ADC03] - ADC Example 03
- * DESCRIPTION: Asynchronous sampling example and send over serial.
+ * [ADC03] Using ADC Peripherals - Example 03
+ * Asynchronous sampling example and send over serial!
  *
  */
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"
-
-/* External Leds definitions */
-#define LEDX_LINE               PAL_LINE( GPIOA, 0 ) // ARDUINO A0 (CN8.1)
-#define LEDY_LINE               PAL_LINE( GPIOA, 1 ) // ARDUINO A1 (CN8.2)
 
 #define VOLTAGE_RES            ((float)3.3/4096)
 
@@ -35,6 +31,10 @@
 static thread_reference_t trp = NULL;
 
 BaseSequentialStream * chp = (BaseSequentialStream *) &SD2;
+
+
+#define LEDX_LINE               PAL_LINE( GPIOB, 10 )
+#define LEDY_LINE               PAL_LINE( GPIOA, 8 )
 
 /*
  * ADC streaming callback.
@@ -84,9 +84,9 @@ static const ADCConversionGroup adcgrpcfg = {
   ADC_SQR3_SQ2_N(ADC_CHANNEL_IN11) | ADC_SQR3_SQ1_N(ADC_CHANNEL_IN10) /* SQR3 */
 };
 
-#define WA_ADC_SIZE         256
-static THD_WORKING_AREA( waAdc, WA_ADC_SIZE + sizeof(float) * ADC_GRP_NUM_CHANNELS );
-static THD_FUNCTION( thdAdc, arg ) {
+
+static THD_WORKING_AREA( waLed, 128 + sizeof(float) * ADC_GRP_NUM_CHANNELS );
+static THD_FUNCTION( thdLed, arg ) {
   (void) arg;
 
   /*
@@ -113,8 +113,6 @@ static THD_FUNCTION( thdAdc, arg ) {
      * Check if acquisition is OK or KO
      */
     if( (uint32_t) msg == MSG_ADC_KO ) {
-      chprintf( chp, "Conversione ERROR!\n\r" );
-      chThdSleepSeconds( 2 );
       continue;
     }
 
@@ -136,7 +134,6 @@ static THD_FUNCTION( thdAdc, arg ) {
     /*
      * Print converted values.
      */
-    chprintf( chp, "\033[H" );
     chprintf( chp, "X channel = %4.1f %%\n\r", converted[0] );
     chprintf( chp, "Y channel = %4.1f %%\n\r", converted[1] );
   }
@@ -155,7 +152,7 @@ int main(void) {
 
   sdStart( &SD2, NULL );
 
-  chThdCreateStatic( waAdc, sizeof(waAdc), NORMALPRIO + 1, thdAdc, (void*) NULL );
+  chThdCreateStatic( waLed, sizeof( waLed), NORMALPRIO + 5, thdLed, (void*) NULL );
 
   while (true) {
     palToggleLine( LINE_LED_GREEN );
@@ -163,4 +160,3 @@ int main(void) {
   }
 
 }
-

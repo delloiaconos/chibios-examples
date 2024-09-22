@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,42 +16,30 @@
 */
 
 /*
- * [NISC2022-GPIO04] - A simple way to debounce an external button.
- * DESCRIPTION: Debouncing a button connected to a generic GPIO input with
- * external pull-up.
- * NOTE: Add an external pull-up resistor to the button; suggested R >= 4.7 kOhm
+ * [GPIO04] Using GPIO Peripheral - Example 04
+ * How to use the USER Button to read the user input and change the state
+ * of the on board LED.
  */
+
 #include "ch.h"
 #include "hal.h"
-
-
-#define EBTN_PORT     GPIOC
-#define EBTN_PIN      7U
-#define EBTN_LINE     PAL_LINE( EBTN_PORT, EBTN_PIN )
 
 int main(void) {
 
   halInit();
   chSysInit();
 
-  palSetLineMode( EBTN_LINE, PAL_MODE_INPUT );
-
   while (true) {
-    /* flag variable will communicate if the button was pressed! */
-    uint32_t flag = 0;
-
-    if( palReadLine( EBTN_LINE ) == PAL_LOW ) {
-      /* The following while loop holds until the button is released! */
-      while( palReadLine( EBTN_LINE ) == PAL_LOW ) {
-        chThdSleepMilliseconds(20);
+      /*
+       * Read the LINE_BUTTON that refers to the USER button on the NUCLEO-64
+       * Board and if it has been pressed (condition PAL_LOW) turn on the LED.
+       */
+      if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+        palSetLine( LINE_LED_GREEN );
+      } else {
+        palClearLine( LINE_LED_GREEN );
       }
-      flag = 1;
-    }
-    /* If the button has been pressed the Onboard Green LED is toggled. */
-    if( flag == 1 ) {
-      palToggleLine( LINE_LED_GREEN );
-    }
 
-    chThdSleepMilliseconds(20);
+      chThdSleepMilliseconds( 25 );
   }
 }

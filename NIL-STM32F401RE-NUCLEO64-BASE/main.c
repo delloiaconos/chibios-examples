@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,40 +16,41 @@
 */
 
 /*
- * [NISC2022-BASE] - Basic Project Structure.
- * DESCRIPTION: This project has been adapted from the ChibiOS Demos
+ * [GPIO08] Using GPIO Peripherals - Example 08
+ * How to use listeners and callbacks to measure time
  */
 
 #include "ch.h"
 #include "hal.h"
 
-/*
- * Green LED blinker thread, times are in milliseconds.
- */
-static THD_WORKING_AREA(waThread1, 128);
-static THD_FUNCTION(Thread1, arg) {
+#define BTN_PORT     GPIOC
+#define BTN_PIN      GPIOC_BUTTON
+#define BTN_LINE     PAL_LINE( BTN_PORT, BTN_PIN )
+
+
+static uint32_t time;
+
+static void button_cb(void *arg) {
+
   (void)arg;
 
-  while (true) {
-    palClearPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
-    palSetPad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
+  static systime_t start, stop;
+  chSysLockFromISR();
+  if( palReadLine( BTN_LINE ) == PAL_LOW ) {
+    start = chVTGetSystemTimeX();
+  } else {
+    sysinterval_t delta;
+    stop = chVTGetSystemTimeX();
+    delta = chTimeDiffX( start, stop );
+    time = TIME_I2MS( delta );
   }
+  chSysUnlockFromISR();
 }
-
-/*
- * Threads creation table, one entry per thread.
- */
-THD_TABLE_BEGIN
-  THD_TABLE_THREAD(0, "blinker1",     waThread1,       Thread1,      NULL)
-THD_TABLE_END
 
 /*
  * Application entry point.
  */
 int main(void) {
-
   /*
    * System initializations.
    * - HAL initialization, this also initializes the configured device drivers
@@ -60,12 +61,14 @@ int main(void) {
   halInit();
   chSysInit();
 
-  /* This is now the idle thread loop, you may perform here a low priority
-     task but you must never try to sleep or wait in this loop. Note that
-     this tasks runs at the lowest priority level so any instruction added
-     here will be executed after all other tasks have been started.*/
+  /* Enabling events on both edges of the button line.*/
+  palEnableLineEvent( BTN_LINE, PAL_EVENT_MODE_BOTH_EDGES);
+  palSetLineCallback( BTN_LINE, button_cb, NULL);
+
+  /*
+   * Normal main() thread activity.
+   */
   while (true) {
+    chThdSleepMilliseconds( 1000 );
   }
 }
-
-

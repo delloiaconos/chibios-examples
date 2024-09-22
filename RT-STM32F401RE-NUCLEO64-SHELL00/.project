@@ -34,10 +34,5 @@
 			<type>2</type>
 			<locationURI>CHIBIOS/os</locationURI>
 		</link>
-		<link>
-			<name>shell</name>
-			<type>2</type>
-			<location>C:/ChibiStudio/chibios2111/os/various/shell</location>
-		</link>
 	</linkedResources>
 </projectDescription>

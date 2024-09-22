@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,49 +16,52 @@
 */
 
 /*
- * [NISC2022-GPIO08] - How to use PAL Events and callbacks to measure time.
- * DESCRIPTION: Use of event callbacks to measure time with Virtual Timer System Time.
- * NOTE: Enable PAL_USE_CALLBACKS in halconf.h
+ * [GPIO07] Using GPIO Peripherals - Example 07
+ * How to use PAL_LINEs as variables and iterate through an array of output 
+ * lines. This example iterate through three different LEDs states (Off, Red, 
+ * Green, Blu) using the User Button.
  */
 
 #include "ch.h"
 #include "hal.h"
 
-/*
- * Shared Variable: time
- */
-static uint32_t time;
+/* External LEDs Red, Green and Blue: Port, Pin, Line */
+#define RLED_LINE   PAL_LINE( GPIOA, 0U ) // ARDUINO A0 (CN8.1)
+#define GLED_LINE   PAL_LINE( GPIOA, 1U ) // ARDUINO A1 (CN8.2)
+#define BLED_LINE   PAL_LINE( GPIOA, 4U ) // ARDUINO A2 (CN8.3)
 
-static void button_cb(void *arg) {
+#define ARRAY_LEN(a)            (sizeof(a)/sizeof(a[0]))
 
-  (void)arg;
-
-  static systime_t start, stop;
-  chSysLockFromISR();
-  if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
-    start = chVTGetSystemTimeX();
-  } else {
-    sysinterval_t delta;
-    stop = chVTGetSystemTimeX();
-    delta = chTimeDiffX( start, stop );
-    time = TIME_I2MS( delta );
-  }
-  chSysUnlockFromISR();
-}
-
-/*
- * Application entry point.
- */
 int main(void) {
 
   halInit();
   chSysInit();
 
-  /* Enabling events on both edges of the button line.*/
-  palEnableLineEvent( LINE_BUTTON, PAL_EVENT_MODE_BOTH_EDGES);
-  palSetLineCallback( LINE_BUTTON, button_cb, NULL);
+  uint32_t i, state;
+  ioline_t leds[] = { RLED_LINE, GLED_LINE, BLED_LINE };
 
-  while (true) {
-    chThdSleepMilliseconds( 1000 );
+  /* Setup Leds Outputs */
+  for( i = 0; i < ARRAY_LEN(leds); i++ ) {
+    palSetLineMode( leds[i], PAL_MODE_OUTPUT_PUSHPULL );
+  }
+
+  state = i;
+  while( 1 ){
+
+    if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+      chThdSleepMilliseconds(5);
+      while( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+        chThdSleepMilliseconds(10);
+      }
+
+      /* Action to be performed on Positive Edge Detection */
+      state = (state+1) % ( ARRAY_LEN(leds) + 1 );
+    }
+
+    for( i = 0; i < ARRAY_LEN(leds); i++ ) {
+      palWriteLine( leds[i], i == state ? PAL_HIGH : PAL_LOW );
+    }
+
+    chThdSleepMilliseconds( 10 );
   }
 }

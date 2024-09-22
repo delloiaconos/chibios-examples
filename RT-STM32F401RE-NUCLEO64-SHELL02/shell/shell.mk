@@ -1,9 +1,8 @@
 # RT Shell files.
-SHELLDIR = ./shell
-SHELLSRC = $(SHELLDIR)/shell.c \
-           $(SHELLDIR)/shell_cmd.c
+SHELLSRC = ./shell/shell.c \
+           ./shell/shell_cmd.c
 
-SHELLINC = $(SHELLDIR)
+SHELLINC = ./shell
 
 # Shared variables
 ALLCSRC += $(SHELLSRC)

@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,10 +16,8 @@
 */
 
 /*
- * [NISC2022-PWM00] - Using PWM Peripheral and Driver.
- * DESCRIPTION:
+ * [PWM00] Using TIMER Peripheral with PWM Driver - Example 00
  */
-
 #include "ch.h"
 #include "hal.h"
 
@@ -43,9 +41,7 @@ static PWMConfig pwmcfg = {
    {PWM_OUTPUT_ACTIVE_HIGH, NULL},
    {PWM_OUTPUT_DISABLED, NULL}
   },
-  0,
-  0,
-  0
+  0, 0, 0
 };
 
 /*
@@ -83,4 +79,3 @@ int main(void) {
 
   pwmStop(&PWMD3);
 }
-

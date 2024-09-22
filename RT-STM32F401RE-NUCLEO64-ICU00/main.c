@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,10 +16,9 @@
 */
 
 /*
- * [NISC2022-ICU00] - Using ICU Peripheral and Driver
- * DESCRIPTION:
+ * [ICU00] Using TIMER Peripheral with ICU Driver - Example 00
+ * Basic project to measure timing on a pin and send over serial!
  */
-
 
 #include "ch.h"
 #include "hal.h"
@@ -77,7 +76,7 @@ int main(void) {
   chThdSleepMilliseconds(2000);
 
   while (true) {
-    chprintf( chp, "Counter = %d\n\r", counter);
+    chprintf( chp, "Counter = %d\n\r", counter );
     chThdSleepMilliseconds(1000);
   }
 
@@ -86,3 +85,4 @@ int main(void) {
 
   return 0;
 }
+

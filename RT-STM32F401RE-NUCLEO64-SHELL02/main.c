@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2022 Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,49 +16,36 @@
 */
 
 /*
- * [NISC2022-SHELL01] - Project-Local custom shell.
- * DESCRIPTION: The shell has been imported into the project to be modified.
+ * [SHELL02] Using the SHELL - Example 02
+ * A much more clean project with the ChibiOS shell:
+ * - Tests commands are disabled
+ * - Exit command is disabled
+ * - Info command is disabled
+ * The shell files are imported into the project!
  */
 
 #include "ch.h"
 #include "hal.h"
-
-#include "shell.h"
 #include "chprintf.h"
+#include "shell.h"
 
-#include <string.h>
+static THD_WORKING_AREA(waShell, 512);
 
 static void cmd_hello(BaseSequentialStream *chp, int argc, char *argv[]) {
   (void) argc;
   (void) argv;
-
-  chprintf(chp, "Hello World!\r\n");
-}
-
-static void cmd_led(BaseSequentialStream *chp, int argc, char *argv[]) {
-  if( argc == 1 && strcmp( argv[0], "ON" ) == 0 ) {
-    palSetLine( LINE_LED_GREEN );
-  } else if( argc == 1 && strcmp( argv[0], "OFF" ) == 0 ) {
-    palClearLine( LINE_LED_GREEN );
-  } else {
-    chprintf(chp, "Usage: led [ON|OFF]\r\n");
-  }
+  chprintf( chp, "Hello NISC2020\n\r" );
 }
 
 static const ShellCommand commands[] = {
   {"hello", cmd_hello},
-  {"led", cmd_led},
   {NULL, NULL}
 };
 
-static const ShellConfig shell_cfg1 = {
-  (BaseSequentialStream *)&SD2,
+static const ShellConfig shell_cfg = {
+  (BaseSequentialStream *) &SD2,
   commands
 };
-
-#define WA_SHELL   2048
-THD_WORKING_AREA( waShell, WA_SHELL );
-
 
 /*
  * Application entry point.
@@ -76,11 +63,8 @@ int main(void) {
   chSysInit();
 
   /*
-   * Initializes a SERIAL driver.
+   * Activates the serial driver 2 using the driver default configuration.
    */
-  palSetPadMode( GPIOA, 2, PAL_MODE_ALTERNATE(7) );
-  palSetPadMode( GPIOA, 3, PAL_MODE_ALTERNATE(7) );
-
   sdStart(&SD2, NULL);
 
   /*
@@ -88,12 +72,13 @@ int main(void) {
    */
   shellInit();
 
+  chThdCreateStatic(waShell, sizeof( waShell ), NORMALPRIO + 1, shellThread, (void *) &shell_cfg);
   /*
-   * Create Shell Thread!
+   * Normal main() thread activity, in this demo it does nothing except
+   * sleeping in a loop and check the button state.
    */
-  chThdCreateStatic(waShell, sizeof(waShell), NORMALPRIO, shellThread, (void *)&shell_cfg1);
-
   while (true) {
-    chThdSleepMilliseconds(1000);
+    palTogglePad(GPIOA, GPIOA_LED_GREEN);
+    chThdSleepMilliseconds(500);
   }
 }

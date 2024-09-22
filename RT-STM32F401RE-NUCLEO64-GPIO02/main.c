@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 */
 
 /*
- * [NISC2022-GPIO02] - PAL Line usage.
- * DESCRIPTION: How to use the HAL GPIO Line to write on generic PIN.
+ * [GPIO02] Using GPIO Peripheral - Example 02
+ * How to use the GPIO peripheral to control an external LED connected to GPIOA pin #5
  */
 
 #include "ch.h"
@@ -28,7 +28,6 @@
  */
 #define LED_PORT    GPIOA
 #define LED_PIN     6U
-#define LED_LINE    PAL_LINE( LED_PORT, LED_PIN )
 
 int main(void) {
 
@@ -38,13 +37,19 @@ int main(void) {
   /*
    * Setup the port as an OUTPUT with PUSH/PULL capabilities
    */
-  palSetLineMode( LED_LINE, PAL_MODE_OUTPUT_PUSHPULL );
+  palSetPadMode( LED_PORT, LED_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 
   while (true) {
-      palWriteLine(LED_LINE, PAL_LOW);
+      /*
+       * Set LED_PORT pin to logic LOW and wait 1000 ms.
+       */
+      palClearPad(LED_PORT, LED_PIN);
       chThdSleepMilliseconds(1000);
 
-      palWriteLine(LED_LINE, PAL_HIGH);
+      /*
+       * Set LED_PORT pin to logic HIGH and wait 250ms
+       */
+      palSetPad(LED_PORT, LED_PIN);
       chThdSleepMilliseconds(250);
   }
 }

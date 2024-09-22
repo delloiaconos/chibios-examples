@@ -1,5 +1,5 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples
+    ChibiOS Examples
     Copyright (C) 2020-2021 Domenico Rega [dodorega@gmail.com]
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

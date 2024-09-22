@@ -17,7 +17,9 @@
 
 /*
  * [GPIO06] Using GPIO Peripherals - Example 06
- * How use a thread to read the user input and a thread to manage the LED.
+ * A simple way to use two threads, in a non thread-safe way: 
+ * - the first thread (main) reads the user input;
+ * - the secon thread (thdLed) manages the LED.
  */
 
 #include "ch.h"

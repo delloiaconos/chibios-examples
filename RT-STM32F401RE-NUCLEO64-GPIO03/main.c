@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,52 +16,30 @@
 */
 
 /*
- * [GPIO03] Using GPIO Peripherals - Example 03
- * How to use threads to control 2 LED with LINES and different timings
+ * [NISC2022-GPIO03] - Reading the on-board user button.
+ * DESCRIPTION: Read the LINE_BUTTON that refers to the USER button on the
+ * NUCLEO-64 Board and if it has been pressed (condition PAL_LOW) turn-on
+ * the on-board LED.
  */
 
 #include "ch.h"
 #include "hal.h"
-
-#define LED_GREEN_PORT        GPIOA
-#define LED_GREEN_PIN         5U
-
-/*
- * Definition of LED_GREEN and LED_RED Lines.
- */
-#define LED_GREEN_LINE          PAL_LINE( LED_GREEN_PORT, LED_GREEN_PIN )
-#define LED_RED_LINE            PAL_LINE( GPIOA, 6U )
-
-/*
- * Definition of a thread working area (waLed) and of a thread function thdLed
- */
-static THD_WORKING_AREA( waLed, 128 );
-static THD_FUNCTION( thdLed, arg ) {
-  (void) arg;
-
-  palSetLineMode( LED_RED_LINE, PAL_MODE_OUTPUT_PUSHPULL );
-  while( 1 ) {
-    palToggleLine( LED_RED_LINE );
-    chThdSleepMilliseconds( 330 );
-  }
-}
 
 int main(void) {
 
   halInit();
   chSysInit();
 
-  /*
-   * Creation of a new thread into a static memory area (waLed) with priority
-   * "NORMALPRIO + 1" and thread function "thdLed"
-   */
-  chThdCreateStatic(waLed, sizeof(waLed), NORMALPRIO + 1, thdLed, NULL );
-
-  palSetLineMode( LED_GREEN_LINE, PAL_MODE_OUTPUT_PUSHPULL );
   while (true) {
-      palClearLine( LED_GREEN_LINE );
-      chThdSleepMilliseconds(750);
-      palSetLine( LED_GREEN_LINE );
-      chThdSleepMilliseconds(250);
+      /*
+       * Check if button is pressed.
+       */
+      if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+        palSetLine( LINE_LED_GREEN );
+      } else {
+        palClearLine( LINE_LED_GREEN );
+      }
+
+      chThdSleepMilliseconds( 25 );
   }
 }

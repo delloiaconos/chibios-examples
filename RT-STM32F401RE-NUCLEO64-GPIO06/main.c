@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,41 +16,52 @@
 */
 
 /*
- * [GPIO06] Using GPIO Peripherals - Example 06
- * How to debounce an user button: a simple way!
+ * [NISC2022-GPIO06] - Iterate through an array of output lines.
+ * DESCRIPTION: Usage of PAL_LINEs as variables. Iterate through three
+ * different LEDs states (Off, Red, Green, Blu) using the User Button.
  */
 
 #include "ch.h"
 #include "hal.h"
 
+/* External LEDs Red, Green and Blue: Port, Pin, Line */
+#define RLED_LINE   PAL_LINE( GPIOA, 0U ) // ARDUINO A0 (CN8.1)
+#define GLED_LINE   PAL_LINE( GPIOA, 1U ) // ARDUINO A1 (CN8.2)
+#define BLED_LINE   PAL_LINE( GPIOA, 4U ) // ARDUINO A2 (CN8.3)
 
-#define EXTBTN_PORT     GPIOC
-#define EXTBTN_PIN      7U
-#define EXTBTN_LINE     PAL_LINE( EXTBTN_PORT, EXTBTN_PIN )
+#define ARRAY_LEN(a)            (sizeof(a)/sizeof(a[0]))
 
 int main(void) {
 
   halInit();
   chSysInit();
 
-  palSetLineMode( EXTBTN_LINE, PAL_MODE_INPUT );
+  uint32_t i, state;
+  ioline_t leds[] = { RLED_LINE, GLED_LINE, BLED_LINE };
 
-  while (true) {
-    /* flag variable will communicate if the button was pressed! */
-    uint32_t flag = 0;
+  /* Setup Leds Outputs */
+  for( i = 0; i < ARRAY_LEN(leds); i++ ) {
+    palSetLineMode( leds[i], PAL_MODE_OUTPUT_PUSHPULL );
+  }
 
-    if( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
-      /* The following while loop holds until the button is released! */
-      while( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
-        chThdSleepMilliseconds(20);
+  state = i;
+  while( 1 ){
+
+    if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+      chThdSleepMilliseconds(5);
+      while( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
+        chThdSleepMilliseconds(10);
       }
-      flag = 1;
-    }
-    /* If the button has been pressed the Onboard Green LED is toggled. */
-    if( flag == 1 ) {
-      palToggleLine( LINE_LED_GREEN );
+
+      /* Action to be performed on Positive Edge Detection */
+      state = (state+1) % ( ARRAY_LEN(leds) + 1 );
     }
 
-    chThdSleepMilliseconds(20);
+    for( i = 0; i < ARRAY_LEN(leds); i++ ) {
+      palWriteLine( leds[i], i == state ? PAL_HIGH : PAL_LOW );
+    }
+
+    chThdSleepMilliseconds( 10 );
   }
 }
+

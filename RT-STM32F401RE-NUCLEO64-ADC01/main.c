@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus 2022 Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 /*
- * [ADC01] Using ADC Peripherals - Example 01
- * Simplest project with single acquisition, acquires ADC_GRP_BUF_DEPTH samples
+ * [NISC2022-ADC01] - ADC Example 01
+ * DESCRIPTION: Simple project with single acquisition, acquires ADC_GRP_BUF_DEPTH samples
  * from a single channel (regular sequence with only one channel) and calculates
  * the average value to turn on a LED when this is greater than a threshold.
  */
+
 
 #include "ch.h"
 #include "hal.h"
@@ -118,3 +120,4 @@ int main(void) {
 
   adcStop(&ADCD1);
 }
+

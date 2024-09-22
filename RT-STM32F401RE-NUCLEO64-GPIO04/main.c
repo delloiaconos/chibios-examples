@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,70 +16,42 @@
 */
 
 /*
- * [GPIO04] Using GPIO Peripherals - Example 04
- * How to use a thread allocated in the heap memory and with parameters
- * to control 2 different LED with LINES and different timings for ON and
- * OFF time.
+ * [NISC2022-GPIO04] - A simple way to debounce an external button.
+ * DESCRIPTION: Debouncing a button connected to a generic GPIO input with
+ * external pull-up.
+ * NOTE: Add an external pull-up resistor to the button; suggested R >= 4.7 kOhm
  */
-
 #include "ch.h"
 #include "hal.h"
 
 
-#define LED_RED_LINE            PAL_LINE( GPIOA, 5U )
-#define LED_GREEN_LINE          PAL_LINE( GPIOA, 6U )
-#define LED_BLU_LINE            PAL_LINE( GPIOA, 7U )
-
-/*
- * Structure containing the configuration of the thdLed thread function.
- */
-typedef struct {
-  ioline_t line;
-  uint32_t tOn;
-  uint32_t tOff;
-} ledconfig_t;
-
-
-#define THDLED_WA_SIZE      THD_WORKING_AREA_SIZE(128)
-
-static THD_FUNCTION( thdLed, arg ) {
-  ledconfig_t * cfg = (ledconfig_t *) arg;
-
-  palSetLineMode( cfg->line, PAL_MODE_OUTPUT_PUSHPULL );
-  while(true) {
-    palSetLine( cfg->line );
-    chThdSleepMilliseconds( cfg->tOn );
-    palClearLine( cfg->line );
-    chThdSleepMilliseconds( cfg->tOff );
-  }
-}
-
-/*
- * Creating configuration structures.
- */
-static ledconfig_t configs[] = {
-    {LED_BLU_LINE, 500, 250},
-    {LED_RED_LINE, 1000, 1500}
-};
-
-static thread_t * thds[sizeof(configs)/sizeof(configs[0])];
+#define EBTN_PORT     GPIOC
+#define EBTN_PIN      7U
+#define EBTN_LINE     PAL_LINE( EBTN_PORT, EBTN_PIN )
 
 int main(void) {
 
   halInit();
   chSysInit();
 
-  /*
-   * Creating threads from Heap Memory
-   */
-  for( uint32_t i = 0; i < sizeof(configs)/sizeof(configs[0]); i++ ) {
-    thds[i] = chThdCreateFromHeap(NULL, THDLED_WA_SIZE, "Led", NORMALPRIO + 1, thdLed, (void *)&configs[i] );
-  }
+  palSetLineMode( EBTN_LINE, PAL_MODE_INPUT );
 
-  palSetLineMode( LED_GREEN_LINE, PAL_MODE_OUTPUT_PUSHPULL );
   while (true) {
-      palToggleLine( LED_GREEN_LINE );
-      chThdSleepMilliseconds(500);
+    /* flag variable will communicate if the button was pressed! */
+    uint32_t flag = 0;
+
+    if( palReadLine( EBTN_LINE ) == PAL_LOW ) {
+      /* The following while loop holds until the button is released! */
+      while( palReadLine( EBTN_LINE ) == PAL_LOW ) {
+        chThdSleepMilliseconds(20);
+      }
+      flag = 1;
+    }
+    /* If the button has been pressed the Onboard Green LED is toggled. */
+    if( flag == 1 ) {
+      palToggleLine( LINE_LED_GREEN );
+    }
+
+    chThdSleepMilliseconds(20);
   }
 }
-

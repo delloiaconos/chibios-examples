@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    NeaPolis Innovation Summer Campus 2022 Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,29 +16,38 @@
 */
 
 /*
- * [GPIO00] Using GPIO Peripherals - Example 01
- * How to use the GPIO peripheral to blink the on board Green LED
+ * [NISC2022-GPIO01] - Generic output PIN configuration and use.
+ * DESCRIPTION: How to use the HAL GPIO driver to blink a generic PIN.
  */
 
 #include "ch.h"
 #include "hal.h"
 
+/* Green LED: Port, Pin definitions */
+#define LED_PORT   GPIOA
+#define LED_PIN    5U
+
 int main(void) {
 
   halInit();
   chSysInit();
+  
+  /*
+   * Configure the LED_PIN at LED_PORT in Output (pushpull) mode
+   */
+  palSetPadMode( LED_PORT, LED_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 
   while (true) {
       /*
-       * Set GPIOA LED_GREEN pin to logic LOW and wait
+       * Set GPIOA LED_PIN pin to logic LOW and wait
        */
-      palClearPad(GPIOA, GPIOA_LED_GREEN);
+      palClearPad(GPIOA, LED_PIN);
       chThdSleepMilliseconds(1000);
 
       /*
-       * Set GPIOA LED_GREEN pin to logic HIGH and wait
+       * Set GPIOA LED_PIN pin to logic HIGH and wait
        */
-      palSetPad(GPIOA, GPIOA_LED_GREEN);
+      palSetPad(GPIOA, LED_PIN);
       chThdSleepMilliseconds(250);
   }
 }

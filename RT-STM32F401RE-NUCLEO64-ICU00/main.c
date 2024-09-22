@@ -1,9 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples
-    Copyright (C) 2020-2021
-    - Salvatore Dello Iacono [delloiaconos@gmail.com]
-    - Matteo Caiazzo
-    - Ciro Mazzocchi
+    NeaPolis Innovation Summer Campus Examples
+    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,10 +15,11 @@
     limitations under the License.
 */
 
-
 /*
- * [ICU00] Using ICU Peripheral and Driver - Example 00
+ * [NISC2022-ICU00] - Using ICU Peripheral and Driver
+ * DESCRIPTION:
  */
+
 
 #include "ch.h"
 #include "hal.h"
@@ -88,4 +86,3 @@ int main(void) {
 
   return 0;
 }
-

@@ -89,7 +89,7 @@ PROJECT = ch
 MCU  = cortex-m4
 
 # Imported source files and paths.
-CHIBIOS  :=../../chibios203
+CHIBIOS  := ../../chibios2111
 CONFDIR  := ./cfg
 BUILDDIR := ./build
 DEPDIR   := ./.dep
@@ -105,10 +105,13 @@ include $(CHIBIOS)/os/hal/boards/ST_NUCLEO64_F401RE/board.mk
 include $(CHIBIOS)/os/hal/osal/rt-nil/osal.mk
 # RTOS files (optional).
 include $(CHIBIOS)/os/rt/rt.mk
-include $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC/mk/port_v7m.mk
+include $(CHIBIOS)/os/common/ports/ARMv7-M/compilers/GCC/mk/port.mk
 # Auto-build files in ./source recursively.
 include $(CHIBIOS)/tools/mk/autobuild.mk
 # Other files (optional).
+#include $(CHIBIOS)/os/test/test.mk
+#include $(CHIBIOS)/test/rt/rt_test.mk
+#include $(CHIBIOS)/test/oslib/oslib_test.mk
 
 # Define linker script file here.
 LDSCRIPT= $(STARTUPLD)/STM32F401xE.ld
@@ -130,7 +133,7 @@ ASMSRC = $(ALLASMSRC)
 ASMXSRC = $(ALLXASMSRC)
 
 # Inclusion directories.
-INCDIR = $(CONFDIR) $(ALLINC) 
+INCDIR = $(CONFDIR) $(ALLINC) $(TESTINC)
 
 # Define C warning options here.
 CWARN = -Wall -Wextra -Wundef -Wstrict-prototypes

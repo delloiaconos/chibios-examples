@@ -35,7 +35,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] ADC01 - Simple single acquisition/channel ADC in a thread.
 - [x] ADC02 - Asynchronous conversion call.
 - [x] ADC03 - Asynchronous sampling and over serial display.
-- [ ] ADC04 - TIMER triggered ADC conversion.
+- [x] ADC04 - TIMER triggered ADC conversion.
 
 ### SHELL
 - [ ] SHELL00 - ChibiOS adapted Demo Project.

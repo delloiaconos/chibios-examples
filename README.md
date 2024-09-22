@@ -13,7 +13,7 @@ These examples are cured by Salvatore Dello Iacono, for the NeaPolis Innovation 
 You can read and travel the examples as you desire, but the suggested path is the following:
 ** Only here listed examples have been updated and successfully tested!**
 
-- [ ] GPIOs Peripheral
+- [x] GPIOs Peripheral
 - [ ] UART and SERIAL Peripheral
 - [ ] ADC (Analog to Digital Converter) Peripheral 
 - [ ] DAC (Digital to Analog Converter) Peripheral 
@@ -27,13 +27,13 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] GPIO04 - Reading the on-board user button.
 - [x] GPIO05 - A simple way to debounce an external button.
 - [x] GPIO06 - Multithreading use of GPIO with button and LED.
-- [ ] GPIO07 - Iterate through an array of output lines.
+- [x] GPIO07 - Iterate through an array of output lines.
 - [x] GPIO08 - How to use PAL Events and callbacks to measure time.
 
 ### ADC
-- [ ] ADC00 - ADC Base Project.
-- [ ] ADC01 - Simple project with single acquisition from a single channel.
-- [ ] ADC02 - Asynchronous conversion call.
+- [x] ADC00 - ADC Base Project.
+- [x] ADC01 - Simple single acquisition/channel ADC in a thread.
+- [x] ADC02 - Asynchronous conversion call.
 - [ ] ADC03 - Asynchronous sampling and over serial display.
 - [ ] ADC04 - TIMER triggered ADC conversion.
 

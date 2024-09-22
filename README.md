@@ -15,7 +15,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 
 - [x] GPIOs Peripheral
 - [ ] UART and SERIAL Peripheral
-- [ ] ADC (Analog to Digital Converter) Peripheral 
+- [x] ADC (Analog to Digital Converter) Peripheral 
 - [ ] DAC (Digital to Analog Converter) Peripheral 
 - [ ] ChibiOS Thread Examples 
 - [ ] ChibiOS Shell Examples

@@ -17,29 +17,40 @@
 
 /*
  * [GPIO05] Using GPIO Peripheral - Example 05
- * How to use the USER Button to read the user input and change the state
- * of the on board LED.
+ * How to debounce an user button: a simple way!
  */
 
 #include "ch.h"
 #include "hal.h"
+
+
+#define EXTBTN_PORT     GPIOC
+#define EXTBTN_PIN      7U
+#define EXTBTN_LINE     PAL_LINE( EXTBTN_PORT, EXTBTN_PIN )
 
 int main(void) {
 
   halInit();
   chSysInit();
 
-  while (true) {
-      /*
-       * Read the LINE_BUTTON that refers to the USER button on the NUCLEO-64
-       * Board and if it has been pressed (condition PAL_LOW) turn on the LED.
-       */
-      if( palReadLine( LINE_BUTTON ) == PAL_LOW ) {
-        palSetLine( LINE_LED_GREEN );
-      } else {
-        palClearLine( LINE_LED_GREEN );
-      }
+  palSetLineMode( EXTBTN_LINE, PAL_MODE_INPUT );
 
-      chThdSleepMilliseconds( 25 );
+  while (true) {
+    /* flag variable will communicate if the button was pressed! */
+    uint32_t flag = 0;
+
+    if( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
+      /* The following while loop holds until the button is released! */
+      while( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
+        chThdSleepMilliseconds(20);
+      }
+      flag = 1;
+    }
+    /* If the button has been pressed the Onboard Green LED is toggled. */
+    if( flag == 1 ) {
+      palToggleLine( LINE_LED_GREEN );
+    }
+
+    chThdSleepMilliseconds(20);
   }
 }

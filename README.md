@@ -24,11 +24,11 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] GPIO01 - Onboard Green LED Toggling.
 - [x] GPIO02 - Generic output PIN configuration and use.
 - [x] GPIO03 - PAL LINE usage and Thread example.
-- [ ] GPIO04 - Reading the on-board user button.
-- [ ] GPIO05 - A simple way to debounce an external button.
-- [ ] GPIO06 - Multithreading use of GPIO with button and LED.
+- [x] GPIO04 - Reading the on-board user button.
+- [x] GPIO05 - A simple way to debounce an external button.
+- [x] GPIO06 - Multithreading use of GPIO with button and LED.
 - [ ] GPIO07 - Iterate through an array of output lines.
-- [ ] GPIO08 - How to use PAL Events and callbacks to measure time.
+- [x] GPIO08 - How to use PAL Events and callbacks to measure time.
 
 ### ADC
 - [ ] ADC00 - ADC Base Project.

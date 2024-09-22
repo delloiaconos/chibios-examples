@@ -1,5 +1,5 @@
 /*
-    ChibiOS Examples 
+    ChibiOS Examples
     Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");

@@ -42,7 +42,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] ADC04 - TIMER triggered ADC conversion.
 
 ### SHELL
-- [ ] SHELL00 - ChibiOS adapted Demo Project.
+- [x] SHELL00 - ChibiOS adapted Demo Project.
 - [ ] SHELL01 - Static shell thread with custom commands and configuration.
 - [ ] SHELL02 - Project with local custom shell.
 - [ ] SHELL03 - Using the shell as a menu.

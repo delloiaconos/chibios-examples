@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO01] Using GPIO Peripherals - Example 02
+ * [GPIO02] Using GPIO Peripheral - Example 02
  * How to use the GPIO peripheral to control an external LED connected to GPIOA pin #5
  */
 

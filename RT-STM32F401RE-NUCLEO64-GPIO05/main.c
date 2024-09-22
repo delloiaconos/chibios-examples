@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO05] Using GPIO Peripherals - Example 05
+ * [GPIO05] Using GPIO Peripheral - Example 05
  * How to use the USER Button to read the user input and change the state
  * of the on board LED.
  */

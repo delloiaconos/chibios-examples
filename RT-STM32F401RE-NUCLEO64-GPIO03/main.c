@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO03] Using GPIO Peripherals - Example 03
+ * [GPIO03] Using GPIO Peripheral - Example 03
  * How to use threads to control 2 LED with LINES and different timings
  */
 

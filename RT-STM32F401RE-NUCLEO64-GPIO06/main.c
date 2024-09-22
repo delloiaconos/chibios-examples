@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO06] Using GPIO Peripherals - Example 06
+ * [GPIO06] Using GPIO Peripheral - Example 06
  * How to debounce an user button: a simple way!
  */
 

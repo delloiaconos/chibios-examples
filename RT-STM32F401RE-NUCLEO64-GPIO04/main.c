@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO04] Using GPIO Peripherals - Example 04
+ * [GPIO04] Using GPIO Peripheral - Example 04
  * How to use a thread allocated in the heap memory and with parameters
  * to control 2 different LED with LINES and different timings for ON and
  * OFF time.

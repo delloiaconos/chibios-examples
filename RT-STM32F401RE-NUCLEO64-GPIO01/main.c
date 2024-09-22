@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO00] Using GPIO Peripherals - Example 01
+ * [GPIO01] Using GPIO Peripheral - Example 01
  * How to use the GPIO peripheral to blink the on board Green LED
  */
 

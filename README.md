@@ -21,8 +21,8 @@ You can read and travel the examples as you desire, but the suggested path is th
     - [ ] GPT (General Purpose Timer) Drivers
     - [x] ICU (Interrupt Capture Unit) Drivers
     - [x] PWM (Pulse Width Modulation) Driver
-- [ ] ChibiOS Thread Examples 
-- [ ] ChibiOS Shell Examples
+- [ ] ChibiOS Multithreading Examples 
+- [x] ChibiOS Shell Examples
 
 ### GPIO
 - [x] GPIO01 - Onboard Green LED Toggling.
@@ -45,7 +45,7 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] SHELL00 - ChibiOS adapted Demo Project.
 - [x] SHELL01 - Static shell thread with custom commands and configuration.
 - [x] SHELL02 - Project with local custom shell.
-- [ ] SHELL03 - Using the shell as a menu.
+- [x] SHELL03 - Using the shell as a menu.
 
 ### ICU 
 - [x] ICU00 - Simple example with ICU
@@ -53,6 +53,13 @@ You can read and travel the examples as you desire, but the suggested path is th
 ### PWM
 - [x] PWM00 - Simple exampl with PWM
 
+### Multithreading 
+- [ ] THD00 - *Description Missing*
+- [ ] THD01 - *Description Missing*
+- [ ] THD02 - *Description Missing*
+- [ ] THD03 - *Description Missing*
+- [ ] THD04 - *Description Missing*
+- [ ] THD05 - *Description Missing*
 
 ## Running examples
 1 - You can either download the zipped version of this repository or clone the repository into the ChibiStudio directory.

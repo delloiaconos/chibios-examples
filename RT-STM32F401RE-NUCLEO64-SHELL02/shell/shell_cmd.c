@@ -22,12 +22,12 @@
  * @{
  */
 
-#include <shell/shell.h>
-#include <shell/shell_cmd.h>
 #include <string.h>
 
 #include "ch.h"
 #include "hal.h"
+#include "shell.h"
+#include "shell_cmd.h"
 #include "chprintf.h"
 
 #if (SHELL_CMD_TEST_ENABLED == TRUE) || defined(__DOXYGEN__)

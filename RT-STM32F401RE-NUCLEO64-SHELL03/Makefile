@@ -66,7 +66,7 @@ endif
 
 # Enables the use of FPU (no, softfp, hard).
 ifeq ($(USE_FPU),)
-  USE_FPU = no
+  USE_FPU = hard
 endif
 
 # FPU-related options.
@@ -109,6 +109,9 @@ include $(CHIBIOS)/os/common/ports/ARMv7-M/compilers/GCC/mk/port.mk
 # Auto-build files in ./source recursively.
 include $(CHIBIOS)/tools/mk/autobuild.mk
 # Other files (optional).
+#include $(CHIBIOS)/os/test/test.mk
+#include $(CHIBIOS)/test/rt/rt_test.mk
+#include $(CHIBIOS)/test/oslib/oslib_test.mk
 include $(CHIBIOS)/os/hal/lib/streams/streams.mk
 include $(CHIBIOS)/os/various/shell/shell.mk
 
@@ -119,11 +122,11 @@ LDSCRIPT= $(STARTUPLD)/STM32F401xE.ld
 # setting.
 CSRC = $(ALLCSRC) \
        $(TESTSRC) \
-       shellcommands.c main.c
+       shellcommands.c main.c 
 
 # C++ sources that can be compiled in ARM or THUMB mode depending on the global
 # setting.
-CPPSRC = $(ALLCPPSRC) $(CHIBIOS)/os/various/syscall.c 
+CPPSRC = $(ALLCPPSRC)
 
 # List ASM source files here.
 ASMSRC = $(ALLASMSRC)

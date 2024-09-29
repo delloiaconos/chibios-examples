@@ -27,7 +27,6 @@
 
 #include "ch.h"
 #include "hal.h"
-#include "chprintf.h"
 
 #define VOLTAGE_RES            ((float)3.3/4096)
 

@@ -1,5 +1,6 @@
 /*
-    ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -13,6 +14,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+/*
+ * [FIFO] Chibios Libraries - Example FIFO
+ * Example of a Producer/Consumer structure synchronized with FIFOs.
+ */
 
 #include "ch.h"
 #include "hal.h"

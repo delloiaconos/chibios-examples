@@ -18,34 +18,23 @@
 
 /*
  * Basic project with ChibiOS/RT + HAL on
- * STMicroelectronics NUCLEO64F401RE development board
+ * STMicroelectronics NUCLEO64F471RE development board
  */
+
 
 #include "ch.h"
 #include "hal.h"
 
-
-/*
- * Application entry point.
- */
 int main(void) {
 
-  /*
-   * System initializations.
-   * - HAL initialization, this also initializes the configured device drivers
-   *   and performs the board-specific initializations.
-   * - Kernel initialization, the main() function becomes a thread and the
-   *   RTOS is active.
-   */
   halInit();
   chSysInit();
 
-  /*
-   * Normal main() thread activity, in this demo it does nothing except
-   * sleeping in a loop and check the button state.
-   */
   while (true) {
-    palTogglePad(GPIOA, GPIOA_LED_GREEN);
-    chThdSleepMilliseconds(500);
+      /*
+       * Invert GPIOA LED_GREEN pin and wait 1000 ms.
+       */
+      palClearPad(GPIOA, GPIOA_LED_GREEN);
+      chThdSleepMilliseconds(1000);
   }
 }

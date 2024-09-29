@@ -16,7 +16,7 @@
 */
 
 /*
- * [ADC01] Using ADC Peripherals - Example 04
+ * [ADC04] Using ADC Peripherals - Example 04
  * ADC Acquisition with Timer as trigger.
  */
 

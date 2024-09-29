@@ -16,7 +16,7 @@
 */
 
 /*
- * [FIFO] Chibios Libraries - Example FIFO
+ * [THD06] Chibios Multithreading & Libraries - Example 06
  * Example of a Producer/Consumer structure synchronized with FIFOs.
  */
 

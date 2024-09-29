@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2022 Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,10 +16,11 @@
 */
 
 /*
- * [NISC2022-THD03] - Threading Example 03
- * DESCRIPTION: Execution of a single thread function multiple times with heap
- * allocated working area, using dynamically generated thread names.
+ * [THD03] Chibios Multithreading & Libraries - Example 03
+ * Execution of a single thread function multiple times with heap
+ * allocated working area, using dynamically generated thread names..
  */
+
 #include "ch.h"
 #include "hal.h"
 #include "chprintf.h"

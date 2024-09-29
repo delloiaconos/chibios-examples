@@ -1,9 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples
-    Copyright (C) 2020-2021
-    - Salvatore Dello Iacono [delloiaconos@gmail.com]
-    - Matteo Caiazzo
-    - Ciro Mazzocchi
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,13 +15,11 @@
     limitations under the License.
 */
 
-
 /*
- * [PWM00] Using PWM Peripheral and Driver - Example 00
+ * [PWM00] Using TIMER Peripheral with PWM Driver - Example 00
  */
 #include "ch.h"
 #include "hal.h"
-#include "chprintf.h"
 
 #define PWM_TIMER_FREQUENCY     10000
 #define PWM_PERIOD              50000
@@ -46,8 +41,7 @@ static PWMConfig pwmcfg = {
    {PWM_OUTPUT_ACTIVE_HIGH, NULL},
    {PWM_OUTPUT_DISABLED, NULL}
   },
-  0,
-  0
+  0, 0, 0
 };
 
 /*
@@ -64,11 +58,6 @@ int main(void) {
    */
   halInit();
   chSysInit();
-
-  /*
-   * Activates the serial driver 2 using the driver default configuration.
-   */
-  sdStart(&SD2, NULL);
 
   palSetPadMode(GPIOB, 4, PAL_MODE_ALTERNATE(2));
   palSetPadMode(GPIOC, 7, PAL_MODE_ALTERNATE(2));

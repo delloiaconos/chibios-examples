@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO01] Using GPIO Peripherals - Example 02
+ * [GPIO02] Using GPIO Peripheral - Example 02
  * How to use the GPIO peripheral to control an external LED connected to GPIOA pin #5
  */
 
@@ -40,9 +40,15 @@ int main(void) {
   palSetPadMode( LED_PORT, LED_PIN, PAL_MODE_OUTPUT_PUSHPULL );
 
   while (true) {
+      /*
+       * Set LED_PORT pin to logic LOW and wait 1000 ms.
+       */
       palClearPad(LED_PORT, LED_PIN);
       chThdSleepMilliseconds(1000);
 
+      /*
+       * Set LED_PORT pin to logic HIGH and wait 250ms
+       */
       palSetPad(LED_PORT, LED_PIN);
       chThdSleepMilliseconds(250);
   }

@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 */
 
 /*
- * [ADC01] Using ADC Peripherals - Example 04
+ * [ADC04] Using ADC Peripherals - Example 04
  * ADC Acquisition with Timer as trigger.
  */
 

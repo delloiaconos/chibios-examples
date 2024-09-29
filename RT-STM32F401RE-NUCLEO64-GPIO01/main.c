@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 */
 
 /*
- * [GPIO00] Using GPIO Peripherals - Example 01
+ * [GPIO01] Using GPIO Peripheral - Example 01
  * How to use the GPIO peripheral to blink the on board Green LED
  */
 
@@ -30,15 +30,9 @@ int main(void) {
 
   while (true) {
       /*
-       * Set GPIOA LED_GREEN pin to logic LOW and wait
+       * Invert GPIOA LED_GREEN pin and wait 1000 ms.
        */
       palClearPad(GPIOA, GPIOA_LED_GREEN);
       chThdSleepMilliseconds(1000);
-
-      /*
-       * Set GPIOA LED_GREEN pin to logic HIGH and wait
-       */
-      palSetPad(GPIOA, GPIOA_LED_GREEN);
-      chThdSleepMilliseconds(250);
   }
 }

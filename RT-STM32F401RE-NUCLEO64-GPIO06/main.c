@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2021 Examples 
-    Copyright (C) 2020-2021 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples 
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
 
 /*
  * [GPIO06] Using GPIO Peripherals - Example 06
- * How to debounce an user button: a simple way!
+ * A simple way to use two threads, in a non thread-safe way: 
+ * - the first thread (main) reads the user input;
+ * - the secon thread (thdLed) manages the LED.
  */
 
 #include "ch.h"
@@ -28,27 +30,54 @@
 #define EXTBTN_PIN      7U
 #define EXTBTN_LINE     PAL_LINE( EXTBTN_PORT, EXTBTN_PIN )
 
+
+#define LED_BLU_PORT    GPIOA
+#define LED_BLU_PIN     7U
+#define LED_BLU_LINE    PAL_LINE( LED_BLU_PORT, LED_BLU_PIN )
+
+/*
+ * This global flag variable will communicate if the button was pressed!
+ */
+static uint32_t flag = 0;
+
+/*
+ * Working Area and Thread declarations.
+ */
+static THD_WORKING_AREA( waLed, 128 );
+static THD_FUNCTION( thdLed, arg ) {
+  (void) arg;
+
+  palSetLineMode( LED_BLU_LINE, PAL_MODE_OUTPUT_PUSHPULL );
+  while( 1 ) {
+    /* If the flag equals to 1 than:
+     * 1- the flag becomes 0 (again)
+     * 2- the led toggled
+     */
+    if( flag == 1 ) {
+      flag = 0;
+      palToggleLine( LED_BLU_LINE );
+    }
+    chThdSleepMilliseconds( 200 );
+  }
+}
+
+
 int main(void) {
 
   halInit();
   chSysInit();
 
-  palSetLineMode( EXTBTN_LINE, PAL_MODE_INPUT );
+  chThdCreateStatic(waLed, sizeof(waLed), NORMALPRIO + 1, thdLed, NULL );
 
+  palSetLineMode( EXTBTN_LINE, PAL_MODE_INPUT );
   while (true) {
-    /* flag variable will communicate if the button was pressed! */
-    uint32_t flag = 0;
+    /* This loop does not set the flag variable to 0 */
 
     if( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
-      /* The following while loop holds until the button is released! */
       while( palReadLine( EXTBTN_LINE ) == PAL_LOW ) {
         chThdSleepMilliseconds(20);
       }
       flag = 1;
-    }
-    /* If the button has been pressed the Onboard Green LED is toggled. */
-    if( flag == 1 ) {
-      palToggleLine( LINE_LED_GREEN );
     }
 
     chThdSleepMilliseconds(20);

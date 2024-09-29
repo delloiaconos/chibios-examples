@@ -1,11 +1,8 @@
-# Shell PATH
-SHELLPATH = ./shell
-
 # RT Shell files.
-SHELLSRC = $(SHELLPATH)/shell.c \
-           $(SHELLPATH)/shell_cmd.c
+SHELLSRC = ./shell/shell.c \
+           ./shell/shell_cmd.c
 
-SHELLINC = $(SHELLPATH)
+SHELLINC = ./shell
 
 # Shared variables
 ALLCSRC += $(SHELLSRC)

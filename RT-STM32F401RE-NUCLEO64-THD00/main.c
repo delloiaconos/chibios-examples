@@ -16,8 +16,8 @@
 */
 
 /*
- * [THD01] Chibios Multithreading & Libraries - Example 01
- * Simple way to exchange a variable between two threads.
+ * [THD00] Chibios Multithreading & Libraries - Example 00
+ * Thread unsafe way to share a variable between two threads.
  */
 #include "ch.h"
 #include "hal.h"
@@ -66,7 +66,7 @@ THD_FUNCTION( thdLed, arg ) {
   while( 1 ){
 
     /* If the flag has been set to 1 then the External LED is toggled. */
-    if( flag == 1 ) {
+    if( *((volatile int *) &flag) == 1 ) {
 
       palSetLine( ELED_LINE );
       chThdSleepMilliseconds( 500 );

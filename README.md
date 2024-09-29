@@ -60,8 +60,10 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] THD03 - Multiple parametric threads from the heap.
 - [x] THD04 - Sinchronize threads with mutex.
 - [x] THD05 - Managing threads (suspend & resume).
+- [x] THD06 - Producer/Consumer with FIFOs.
 
 ## Running examples
 
 1 - You can either download the zipped version of this repository or clone the repository into the ChibiStudio directory.
+
 2 - Import the projects into the ChibiStudio workspace (you can also leave the "Copy project into workspace" option unchekced if downloaded correctly the repository)

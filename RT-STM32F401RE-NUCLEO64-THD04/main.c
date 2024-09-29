@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2022 Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 */
 
 /*
- * [NISC2022-THD04] - Threads Example 04: Mutexes
- * DESCRIPTION: How to syncronize two threads using a shared variable and a mutex;
+ * [THD04] Chibios Multithreading & Libraries - Example 04
+ * How to syncronize two threads using a shared variable and a mutex;
  * this is a simple exaple of producer consumer.
  * One thread manage the Button (input), the main thread manages the Led (output)
  */

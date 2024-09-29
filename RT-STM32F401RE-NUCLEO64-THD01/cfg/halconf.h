@@ -79,7 +79,7 @@
  * @brief   Enables the GPT subsystem.
  */
 #if !defined(HAL_USE_GPT) || defined(__DOXYGEN__)
-#define HAL_USE_GPT                         FALSE
+#define HAL_USE_GPT                         TRUE
 #endif
 
 /**
@@ -210,7 +210,7 @@
  * @note    Disabling this option saves both code and data space.
  */
 #if !defined(PAL_USE_CALLBACKS) || defined(__DOXYGEN__)
-#define PAL_USE_CALLBACKS                   TRUE
+#define PAL_USE_CALLBACKS                   FALSE
 #endif
 
 /**

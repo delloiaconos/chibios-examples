@@ -1,6 +1,6 @@
 /*
-    NeaPolis Innovation Summer Campus 2022 Examples
-    Copyright (C) 2020-2022 Salvatore Dello Iacono [delloiaconos@gmail.com]
+    ChibiOS Examples
+    Copyright (C) 2020-2024 Salvatore Dello Iacono [delloiaconos@gmail.com]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -16,9 +16,10 @@
 */
 
 /*
- * [NISC2022-THD01] - Threading Example 01
- * DESCRIPTION: Simple way to pass and argument to threads.
+ * [THD01] Chibios Multithreading & Libraries - Example 01
+ * A simple parametric thread.
  */
+
 #include "ch.h"
 #include "hal.h"
 

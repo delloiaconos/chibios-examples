@@ -21,7 +21,7 @@ You can read and travel the examples as you desire, but the suggested path is th
     - [ ] GPT (General Purpose Timer) Drivers
     - [x] ICU (Interrupt Capture Unit) Drivers
     - [x] PWM (Pulse Width Modulation) Driver
-- [ ] ChibiOS Multithreading Examples 
+- [x] ChibiOS Multithreading Examples 
 - [x] ChibiOS Shell Examples
 
 ### GPIO
@@ -54,14 +54,14 @@ You can read and travel the examples as you desire, but the suggested path is th
 - [x] PWM00 - Simple exampl with PWM
 
 ### Multithreading 
-- [ ] THD00 - *Description Missing*
-- [ ] THD01 - *Description Missing*
-- [ ] THD02 - *Description Missing*
-- [ ] THD03 - *Description Missing*
-- [ ] THD04 - *Description Missing*
-- [ ] THD05 - *Description Missing*
+- [x] THD00 - (Unsafe) Sharing variable between threads. 
+- [x] THD01 - A simple parametric thread.
+- [x] THD02 - Multiple parametric threads with static allocation.
+- [x] THD03 - Multiple parametric threads from the heap.
+- [x] THD04 - Sinchronize threads with mutex.
+- [x] THD05 - Managing threads (suspend & resume).
 
 ## Running examples
-1 - You can either download the zipped version of this repository or clone the repository into the ChibiStudio directory.
 
+1 - You can either download the zipped version of this repository or clone the repository into the ChibiStudio directory.
 2 - Import the projects into the ChibiStudio workspace (you can also leave the "Copy project into workspace" option unchekced if downloaded correctly the repository)
